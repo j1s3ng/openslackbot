@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "local-slack-rag-bot"
+version = "0.1.0"
+description = "Local-first Slack RAG assistant using LM Studio, Qdrant, Postgres, and Redis."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "alembic",
+  "beautifulsoup4",
+  "fastapi",
+  "httpx",
+  "lxml",
+  "markdownify",
+  "openai",
+  "pdfplumber",
+  "psycopg[binary]",
+  "pydantic",
+  "pydantic-settings",
+  "pymupdf",
+  "qdrant-client",
+  "redis",
+  "rq",
+  "slack-bolt",
+  "sqlalchemy",
+  "trafilatura",
+  "uvicorn",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy",
+  "pytest",
+  "pytest-cov",
+  "ruff",
+]
+auth-web = [
+  "playwright",
+]
+unstructured = [
+  "unstructured",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["apps", "packages"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+ignore_missing_imports = true
+packages = ["apps", "packages"]
